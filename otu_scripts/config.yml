@@ -1,6 +1,6 @@
 # Location of Sample Sheet
 
-sample_sheet: ../otu_data/Sample_processing_worksheet_041618.tsv
+sample_sheet: ../otu_data/SampleSheet_052019.tsv
 
 # Location of raw sequences
 

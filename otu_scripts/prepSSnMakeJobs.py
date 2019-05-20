@@ -11,11 +11,10 @@ sample_sheet_fn = cfg_dict['sample_sheet']
 import pandas as pd
 import numpy as np
 import os, sys
-from LoadSampleSheet import load_sample_sheet
 
 pd.set_option('mode.chained_assignment', None)
 
-ssu_df4 = load_sample_sheet(sample_sheet_fn)
+ssu_df4 = pd.read_csv(sample_sheet_fn, sep="\t")
 
 for i in ["I", "R1", "R2"]:
     ssu_df4["BulkDataFile_{}".format(i)] = pd.Series(index=ssu_df4.index, data=["None"]*ssu_df4.shape[0])
@@ -23,8 +22,6 @@ for i in ["I", "R1", "R2"]:
 ssu_df4["MappingFile"] = pd.Series(index=ssu_df4.index, data=["None"]*ssu_df4.shape[0])
 ssu_df4["DemuxFile_R1"] = pd.Series(index=ssu_df4.index, data=["None"]*ssu_df4.shape[0])
 ssu_df4["DemuxFile_R2"] = pd.Series(index=ssu_df4.index, data=["None"]*ssu_df4.shape[0])
-#from Bio import SeqIO
-#len([read in SeqIO.parse(inputfile, "fastq")]
 
 for s_id in ssu_df4.loc[:, 'sequencing ID'].unique():
     row_set = ssu_df4.loc[:, 'sequencing ID'] == s_id
