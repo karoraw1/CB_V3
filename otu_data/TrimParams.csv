@@ -1,0 +1,15 @@
+SeqID,R,truncQ,truncLen,trimLeft,maxEE,minLen
+"Miseq_data_SarahPreheim_Sept2016",1,15,160,23,2,100
+"Miseq_data_SarahPreheim_Sept2016",2,15,200,22,2,100
+"esakows1_152133_plate_1",1,15,275,23,2,100
+"esakows1_152133_plate_1",2,15,225,22,2,100
+"esakows1_152133_plate_2",1,15,275,23,2,100
+"esakows1_152133_plate_2",2,15,200,22,2,100
+"esakows1_132789",1,15,240,23,2,100
+"esakows1_132789",2,15,180,22,2,100
+"sprehei1_123382",1,15,160,23,2,100
+"sprehei1_123382",2,15,160,22,2,100
+"sprehei1_149186",1,15,260,23,2,100
+"sprehei1_149186",2,15,200,22,2,100
+"Keith_Maeve1_138650",1,15,255,23,2,100
+"Keith_Maeve1_138650",2,15,210,22,2,100
