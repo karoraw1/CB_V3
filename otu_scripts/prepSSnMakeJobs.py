@@ -3,7 +3,7 @@ import yaml, os, sys
 config_file = "config.yml"
 
 with open(config_file, 'r') as stream:
-    cfg_dict = yaml.load(stream)
+    cfg_dict = yaml.safe_load(stream)
 
 data_dir = cfg_dict['data_directory']
 sample_sheet_fn = cfg_dict['sample_sheet']

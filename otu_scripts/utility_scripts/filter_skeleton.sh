@@ -2,7 +2,7 @@
 
 #SBATCH
 #SBATCH --job-name=@SID@_trim
-#SBATCH --time=3:00:00
+#SBATCH --time=6:00:00
 #SBATCH --ntasks=24
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=100G
