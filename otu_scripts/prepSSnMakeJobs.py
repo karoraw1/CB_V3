@@ -28,12 +28,12 @@ for s_id in ssu_df4.loc[:, 'sequencing ID'].unique():
     # sequences dir
     s_id_dir = data_dir+"/"+s_id
     seq_dir = s_id_dir+"/"+"FASTQ"
-    # check to see if demuxed 
+    # check to see if demuxed
     # TODO: Change Demux detection to automatic
     dmux = ssu_df4.loc[row_set, "Demux_Bool"]
     dmux_q = list(set(dmux.values))
     assert len(dmux_q) == 1
-    print "\n{}\n--\n\tAre libs are demuxed: {}".format(s_id, dmux_q[0])
+    print("\n{}\n--\n\tAre libs are demuxed: {}".format(s_id, dmux_q[0]))
     if dmux_q[0]:
         demux_dir = seq_dir + "/Demux"
         ssu_df4.loc[row_set, "DemuxFile_R1"] = ssu_df4.loc[row_set, 'SampleID'].apply(lambda x: demux_dir+"/"+x+".R1.fastq")
@@ -41,28 +41,31 @@ for s_id in ssu_df4.loc[:, 'sequencing ID'].unique():
         for d_ix in ssu_df4[row_set].index:
             assert os.path.exists(ssu_df4.loc[d_ix, "DemuxFile_R1"])
             assert os.path.exists(ssu_df4.loc[d_ix, "DemuxFile_R2"])
-        print "\tAll {} forward and reverse read files exist!".format(row_set.sum()*2)
+        print("\tAll {} forward and reverse read files exist!".format(row_set.sum()*2))
     
+    # this locates the sequence files, unique to our lab
     for k in os.listdir(seq_dir):
         if "Undetermined" in k and k.endswith("fastq"):
             bdf = os.path.join(seq_dir,k)
             if "L001_I1_001" in k:
                 ssu_df4.loc[row_set, "BulkDataFile_I"] = bdf
-                print "\tBulk index file identified"
+                print("\tBulk index file identified")
             elif "L001_R1_001" in os.path.basename(bdf):
                 ssu_df4.loc[row_set, "BulkDataFile_R1"] = bdf
-                print "\tBulk R1 file identified"
+                print("\tBulk R1 file identified")
             elif "L001_R2_001" in os.path.basename(bdf):
                 ssu_df4.loc[row_set, "BulkDataFile_R2"] = bdf
-                print "\tBulk R2 file identified"
+                print("\tBulk R2 file identified")
     
+    # this creates an index file of barcodes
     subdf = ssu_df4[row_set].loc[:, ["SampleID", '2nd step barcode sequence']].copy()
     subdf.columns = ["SampleName", "RCBarcode"]
     bcode_fn = s_id_dir+"/"+s_id+"_barcodes.txt"
     subdf.to_csv(bcode_fn, sep="\t", index=False)
-    print "\tWrote {} barcodes to \n\t\t{}".format(subdf.shape[0], bcode_fn)
-    for pip_i in ["demux_pipeline.sh", "filter_pipeline.sh", "callOTUs_pipe.sh"]:
-        task_ = pip_i.split("_")[0]
+    print("\tWrote {} barcodes to \n\t\t{}".format(subdf.shape[0], bcode_fn)
+    for pip_i_f in ["demux_skeleton.sh", "filter_skeleton.sh", "callOTUs_skeleton.sh"]:
+        pip_i = os.path.join("utility_scripts", pip_i_f)
+        task_ = pip_i_f.split("_")[0]
         pipe_fn = s_id_dir+"/"+s_id+"_"+task_+".sh"
         with open(pip_i, 'r') as fh:
             content = fh.read()
@@ -71,4 +74,4 @@ for s_id in ssu_df4.loc[:, 'sequencing ID'].unique():
         with open(pipe_fn , 'w') as ofh:
             ofh.write(n_cont)
         
-        print "\tWrote {}  to\n\t\t{}".format(pip_i, pipe_fn)
+        print("\tWrote {}  to\n\t\t{}".format(pip_i, pipe_fn))
