@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=100G
 #SBATCH --exclusive
-#SBATCH --partition=shared
+#SBATCH --partition=parallel
 #SBATCH --mail-type=END
 #SBATCH --mail-user=karoraw1@jhu.edu
 #SBATCH --error=trim_@SID@.err
@@ -29,6 +29,10 @@ mkdir -p $TRIM_DIR
 Rscript $SCRIPTS_/FilterNTrim.R $SEQ_ID $DEMUX_DIR $TSTAT $TRIM_DIR
 
 source activate otu_caller
+source deactivate
+source activate otu_caller
+echo $(python --version)
+
 python $SCRIPTS_/randomSampleofLibs.py $TRIM_DIR _F_filt.fastq
 python $SCRIPTS_/randomSampleofLibs.py $TRIM_DIR _R_filt.fastq
 cat $TRIM_DIR/*_F_filt.fastq.sample > $BASE_OUT/$SEQ_ID/FASTQ/RandomSampleT.R1.fastq
