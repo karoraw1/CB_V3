@@ -17,7 +17,7 @@ for fq in files_:
     # subsample should be less than counter
     reads_per_lib = min([counter, reads_per_lib])-1
     to_get = set(random.sample(range(counter), reads_per_lib))
-    print "{}:{} reads".format(os.path.basename(fq), counter)
+    print("{}:{} reads".format(os.path.basename(fq), counter))
     out_file = fq+".sample"
     fqp = SeqIO.parse(fq, "fastq")
     wanted = (rec for idx, rec in enumerate(fqp) if idx in to_get)

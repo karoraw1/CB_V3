@@ -8,6 +8,9 @@ with open(config_file, 'r') as stream:
 data_dir = cfg_dict['data_directory']
 sample_sheet_fn = cfg_dict['sample_sheet']
 
+if not os.path.exists(cfg_dict['batch_dir']):
+    os.mkdir(cfg_dict['batch_dir'])
+
 import pandas as pd
 import numpy as np
 import os, sys
@@ -66,7 +69,7 @@ for s_id in ssu_df4.loc[:, 'sequencing ID'].unique():
     for pip_i_f in ["demux_skeleton.sh", "filter_skeleton.sh", "callOTUs_skeleton.sh"]:
         pip_i = os.path.join("utility_scripts", pip_i_f)
         task_ = pip_i_f.split("_")[0]
-        pipe_fn = s_id_dir+"/"+s_id+"_"+task_+".sh"
+        pipe_fn = cfg_dict['batch_dir']+"/"+s_id+"_"+task_+".sh"
         with open(pip_i, 'r') as fh:
             content = fh.read()
         
