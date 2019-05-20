@@ -1,14 +1,21 @@
 # coding=utf-8
+import yaml
+config_file = "config.yml"
+
+with open(config_file, 'r') as stream:
+    cfg_dict = yaml.load(stream)
+
+data_dir = cfg_dict['data_directory']
+sample_sheet_fn = cfg_dict['sample_sheet']
+
 import pandas as pd
 import numpy as np
 import os, sys
 from LoadSampleSheet import load_sample_sheet
+
 pd.set_option('mode.chained_assignment', None)
 
-config_file = "config.yml"
-
-data_dir = "/home-3/karoraw1@jhu.edu/work/sprehei1/Keith_Files/Processed_data_group"
-ssu_df4 = load_sample_sheet()
+ssu_df4 = load_sample_sheet(sample_sheet_fn)
 
 for i in ["I", "R1", "R2"]:
     ssu_df4["BulkDataFile_{}".format(i)] = pd.Series(index=ssu_df4.index, data=["None"]*ssu_df4.shape[0])

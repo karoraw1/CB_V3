@@ -1,0 +1,9 @@
+# Location of Sample Sheet
+
+sample_sheet: ../otu_data/Sample_processing_worksheet_041618.tsv
+
+# Location of raw sequences
+
+data_directory: /home-3/karoraw1@jhu.edu/work/sprehei1/Keith_Files/Processed_data_group
+
+# 
