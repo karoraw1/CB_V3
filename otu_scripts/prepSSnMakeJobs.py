@@ -1,5 +1,5 @@
 # coding=utf-8
-import yaml
+import yaml, os, sys
 config_file = "config.yml"
 
 with open(config_file, 'r') as stream:
@@ -13,7 +13,6 @@ if not os.path.exists(cfg_dict['batch_dir']):
 
 import pandas as pd
 import numpy as np
-import os, sys
 
 pd.set_option('mode.chained_assignment', None)
 
@@ -65,7 +64,7 @@ for s_id in ssu_df4.loc[:, 'sequencing ID'].unique():
     subdf.columns = ["SampleName", "RCBarcode"]
     bcode_fn = s_id_dir+"/"+s_id+"_barcodes.txt"
     subdf.to_csv(bcode_fn, sep="\t", index=False)
-    print("\tWrote {} barcodes to \n\t\t{}".format(subdf.shape[0], bcode_fn)
+    print("\tWrote {} barcodes to \n\t\t{}".format(subdf.shape[0], bcode_fn))
     for pip_i_f in ["demux_skeleton.sh", "filter_skeleton.sh", "callOTUs_skeleton.sh"]:
         pip_i = os.path.join("utility_scripts", pip_i_f)
         task_ = pip_i_f.split("_")[0]
