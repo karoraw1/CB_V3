@@ -19,4 +19,5 @@
 1. In `otu_scripts` there is a file called `config.yml`. Fill this out first.
 2. Make sure paths are correct in the `*skeleton.sh` files in `utility_scripts`
 3. Make sure your trimming parameters are set in the `TrimmingParams.tsv` file
-3. Run `python prepSSnMakeJobs.py` to create batch files for each library
+4. Run `python prepSSnMakeJobs.py` to create batch files for each library
+5. Run all the batch files that were created to trim your libraries

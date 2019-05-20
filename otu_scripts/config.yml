@@ -11,6 +11,5 @@ sample_sheet: ../otu_data/SampleSheet_052019.tsv
 ## Within FASTQ there should be Demux, Trim, and Preprocess which will be created
 data_directory: /home-3/karoraw1@jhu.edu/work/sprehei1/Keith_Files/Processed_data_group
 
-# Location to store scripts created
-
+# Location to store scripts created by copying the skeletons
 batch_dir: batch_files
