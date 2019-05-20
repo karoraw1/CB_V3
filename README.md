@@ -13,3 +13,5 @@
 ### Process:
 
 1. In `otu_scripts` there is a file called `config.yml`. Fill this out first.
+2. Run `python prepSSnMakeJobs.py` to create batch files for each library
+3. 
