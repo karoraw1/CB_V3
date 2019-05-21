@@ -22,12 +22,12 @@ for (i in 1:dim(id_df)[1]) {
 	otu_tabs[[as.character(id_df$LibName[[i]])]] <- readRDS(as.character(id_df$FilePath[[i]]))
 }
 
-st.all <- mergeSequenceTables(otu_tabs[[as.character(id_df$LibName[[1]])]], 
+st.all <- mergeSequenceTables(otu_tabs[[as.character(id_df$LibName[[1]])]],
 	                          otu_tabs[[as.character(id_df$LibName[[2]])]],
 	                          otu_tabs[[as.character(id_df$LibName[[3]])]],
-	                          otu_tabs[[as.character(id_df$LibName[[4]])]], 
-	                          otu_tabs[[as.character(id_df$LibName[[5]])]], 
-	                          otu_tabs[[as.character(id_df$LibName[[6]])]], 
+	                          otu_tabs[[as.character(id_df$LibName[[4]])]],
+	                          otu_tabs[[as.character(id_df$LibName[[5]])]],
+	                          otu_tabs[[as.character(id_df$LibName[[6]])]],
 	                          otu_tabs[[as.character(id_df$LibName[[7]])]])
 # Remove chimeras
 seqtab <- removeBimeraDenovo(st.all, method="consensus", multithread=TRUE)
