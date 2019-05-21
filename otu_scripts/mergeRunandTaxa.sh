@@ -24,3 +24,4 @@ OUT_DIR=$BASE_DIR/otu_data/dada2_outputs
 TAX_DB=~/scratch/DADA2_Silva_DBs
 
 Rscript $SCRIPTS_/merge_chim_tax.R $TAX_DB $LIBdirDF $OUT_DIR
+Rscript $SCRIPTS_/rds_to_tsv.R $OUT_DIR tax_sp_final.rds seqtab_final.rds
