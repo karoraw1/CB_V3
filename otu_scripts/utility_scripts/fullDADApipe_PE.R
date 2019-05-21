@@ -6,18 +6,21 @@ args <- commandArgs(TRUE)
 
 # read in location
 base_path <- args[1]
-seq_ID <- args[2]
-fwd_ID <- args[3]
-rev_ID <- args[4]
-sample_splitter <- args[5]
-n_threads <- strtoi(args[6])
+data_path <- args[2]
+seq_ID <- args[3]
+fwd_ID <- args[4]
+rev_ID <- args[5]
+sample_splitter <- args[6]
+n_threads <- strtoi(args[7])
+
 # base_path <- "/home-3/karoraw1@jhu.edu/work/sprehei1/Keith_Files/Processed_data_group"
 # seq_ID <- "sprehei1_149186"
 # fwd_ID <- "_F_filt"
 # rev_ID <- "_R_filt"
-# sample_splitter <- "_"
+# sample_splitter <- "_F_filt"
 # n_threads <- 1
 
+# input file path
 trim_path = file.path(base_path, seq_ID, "FASTQ", "Trim")
 
 # get file & sample names & paths
@@ -31,11 +34,11 @@ names(fnRs) <- sample.names
 
 # make intermediate saved files
 error_file_name_F = paste(substr(seq_ID, 1, 15), "errorsWS_F.RData", sep="_")
-error_file_path_F = file.path(base_path, seq_ID, error_file_name_F)
+error_file_path_F = file.path(data_path, seq_ID, error_file_name_F)
 error_file_name_R = paste(substr(seq_ID, 1, 15), "errorsWS_R.RData", sep="_")
-error_file_path_R = file.path(base_path, seq_ID, error_file_name_R)
+error_file_path_R = file.path(data_path, seq_ID, error_file_name_R)
 
-# fit error model
+# fit error model if not already done
 
 if (file.exists(error_file_path_F)){
     write(paste("Loading (F) errors from", error_file_name_F), stdout())
@@ -75,22 +78,16 @@ for(sam in sample.names) {
    dds[[sam]] <- merger
 }
 
+rm(derepF); rm(derepR)
 otu_tab_name = paste(substr(seq_ID, 1, 15), "raw_tab.RData", sep="_")
-otu_tab_path = file.path(base_path, seq_ID, otu_tab_name)
+otu_tab_path = file.path(data_path, seq_ID, otu_tab_name)
 write(paste("Finished DADA", Sys.time() ), stdout())
 write(paste("Writing raw table to", otu_tab_path), stdout())
 save(dds, file=otu_tab_path)
 
 seq_tab_name = paste(substr(seq_ID, 1, 15), "seqtab_chim.rds", sep="_")
-seq_tab_path = file.path(base_path, seq_ID, seq_tab_name)
+seq_tab_path = file.path(data_path, seq_ID, seq_tab_name)
 seqtab1 <- makeSequenceTable(dds)
 write(paste("Finished Seq table", Sys.time() ), stdout())
 write(paste("Writing seq table to", seq_tab_path), stdout())
 saveRDS(seqtab1, seq_tab_path)
-
-#nochim_tab_name = paste(substr(seq_ID, 1, 15), "seqtab_nochim.rds", sep="_")
-#nochim_tab_path = file.path(base_path, seq_ID, nochim_tab_name)
-#seqtab2 <- removeBimeraDenovo(seqtab1, method="consensus", multithread=n_threads)
-#write(paste("Finished Chimera Checking", Sys.time() ), stdout())
-#write(paste("Writing dechimera'd table to", nochim_tab_path), stdout())
-#saveRDS(seqtab2, nochim_tab_path)
