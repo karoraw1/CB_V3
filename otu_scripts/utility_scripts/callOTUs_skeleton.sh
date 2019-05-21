@@ -17,7 +17,7 @@ module load R/3.5.1
 
 SEQ_ID=@SID@
 BASE_IN=/home-3/karoraw1@jhu.edu/work/sprehei1/Keith_Files/Processed_data_group
-BASE_OUT=/home-3/karoraw1@jhu.edu/scratch/CB_V3/otu_data/dada2_outputs/$SEQ_ID; mkdir -p $BASE_OUT;
+BASE_OUT=/home-3/karoraw1@jhu.edu/scratch/CB_V3/otu_data/dada2_outputs; mkdir -p $BASE_OUT/$SEQ_ID;
 SUFF1=_F_filt
 SUFF2=_R_filt
 SAMSPLIT=$SUFF1
