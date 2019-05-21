@@ -13,6 +13,9 @@
 7. R 3.5.1
 8. dada2 1.11.1
 9. FASTQC
+10. scikit-bio-0.5.5
+11. deicode 0.2.2
+12. seaborn-0.9.0
 
 ### Process:
 
@@ -28,4 +31,6 @@
 9. Enter file paths for each `.rds` in a CSV file like `otu_data/seq_tabs.csv`
 10. Confirm that desired taxonomic databases are on disk
 11. Edit `mergeRunandTaxa.sh` to point to your input files and DBs and run.
+12. Confirm that TSVs with abundances and taxa are in `dada2_outputs`
 
+Current step: fixing the PCA producer and sequence producer to feed into the treemaker

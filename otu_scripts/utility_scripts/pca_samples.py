@@ -1,22 +1,31 @@
 import matplotlib.pyplot as plt
 import matplotlib as mpl
-from LoadSampleSheet import load_sample_sheet
-plt.style.use('seaborn-poster')
 from deicode.optspace import OptSpace
 from deicode.preprocessing import rclr
 import numpy as np
-import os, sys 
+import os, sys
 import pandas as pd
 import seaborn as sns
 from skbio.stats.ordination import pcoa
 from skbio.stats.distance import mantel
 from skbio.diversity import beta_diversity
 from sklearn.decomposition import PCA
+plt.style.use('seaborn-poster')
 
 
 print("Reading OTU and taxa tables")
-abund_f = "../data/TrimOTUsData/abundance_table.tsv"
-tax_f = "../data/TrimOTUsData/taxa_table.tsv"
+taxa_file = sys.argv[-1]
+abund_file = sys.argv[-2]
+data_path = sys.argv[-3]
+
+# taxa_file = taxa_table.tsv
+# abund_file = abundance_table.tsv
+# data_path = ../../otu_data/dada2_outputs
+
+
+
+abund_f = os.path.join(data_path, abund_file)
+tax_f = os.path.join(data_path, taxa_file)
 taxa_df = pd.read_csv(tax_f, sep="\t")
 abund_df = pd.read_csv(abund_f, sep="\t")
 
