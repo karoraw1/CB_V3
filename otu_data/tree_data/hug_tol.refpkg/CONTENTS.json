@@ -1,0 +1,25 @@
+{
+    "metadata": {
+        "create_date": "2019-02-21 01:02:45",
+        "format_version": "1.1",
+        "locus": "16S_rRNA"
+    },
+    "files": {
+        "phylo_model": "phylo_modelet_i62k1.json",
+        "aln_fasta": "hug_tol.clean.align.fasta",
+        "tree": "RAxML_fastTreeSH_Support.conf.root.ref.tre",
+        "tree_stats": "RAxML_info.ref.tre"
+    },
+    "md5": {
+        "phylo_model": "e9131d34dc1ddc9fa432059f9cf249d7",
+        "aln_fasta": "6ea123a19876e8ee795554c74c3a7c26",
+        "tree": "c06352971aa69e50cf8537abfa4b14d1",
+        "tree_stats": "abde80ba09731161925cbb12a5f838b6"
+    },
+    "log": [
+        "Stripped refpkg (removed 0 files)",
+        "Loaded initial files into empty refpkg"
+    ],
+    "rollback": null,
+    "rollforward": null
+}

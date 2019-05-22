@@ -17,12 +17,14 @@ print("Reading OTU and taxa tables")
 taxa_file = sys.argv[-1]
 abund_file = sys.argv[-2]
 data_path = sys.argv[-3]
+task_name = sys.argv[-4]
+out_path = sys.argv[-5]
 
-# taxa_file = taxa_table.tsv
-# abund_file = abundance_table.tsv
-# data_path = ../../otu_data/dada2_outputs
-
-
+#taxa_file = "taxa_table.tsv"
+#abund_file = "abundance_table.tsv"
+#data_path = "../../otu_data/dada2_outputs"
+#task_name = "create_fasta"
+#out_path = "../../otu_data/tree_data"
 
 abund_f = os.path.join(data_path, abund_file)
 tax_f = os.path.join(data_path, taxa_file)
@@ -43,11 +45,11 @@ abund_df2 = abund_df.set_index('Samples')
 abund_df3 = abund_df2[abund_df2.sum(1)!=0]
 
 # export them for alignment to RFAM covariance model, then stop
-this_step = 4
-if this_step == 1:
+
+if this_step == 'create_fasta':
     heads = sorted(list(abund_df3.columns))
     tails = [OTU_name2seq[i] for i in heads]
-    with open('../data/TREEs/query.fasta', "w") as wofh:
+    with open(os.path.join(out_path, 'query.fasta'), "w") as wofh:
         wofh.write("".join([">{}\n{}\n".format(i, j) for i, j in zip(heads, tails)]))
 elif this_step == 2:
     # read back in data
