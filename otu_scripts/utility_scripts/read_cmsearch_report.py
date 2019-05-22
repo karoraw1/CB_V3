@@ -49,7 +49,7 @@ for _n_, _df_, _bins_ in diff_figs:
         df4 = _df_[col_x]
         df4.plot.hist(bins=_bins_, ax=ax1[r_a, c_a])
         ax1[r_a, c_a].set_title(col_x)
-    plt.savefig(os.path.join(data_path, 'cmsearch_data_{}.png'.format(_n_)))
+    plt.savefig(os.path.join(out_dir, 'cmsearch_data_{}.png'.format(_n_)))
 
 plt.clf();plt.close();
 
@@ -57,15 +57,15 @@ fig2, ax2 = plt.subplots(nrows=1, ncols=1, figsize=(8,8), dpi=200)
 df4.plot.hist(bins=500, title='Exp_E-vals', ax=ax2)
 ax2.set_ylim([0, 200])
 ax2.set_xlim([125, 150])
-plt.savefig(os.path.join(data_path, 'cmsearch_Exp_Evalues.png'))
+plt.savefig(os.path.join(out_dir, 'cmsearch_Exp_Evalues.png'))
 
 e_lim = 132.0
-to_drop = cm_df[(cm_df['E-value'] < e_lim) & cm_df.Group == 1].index
-rev_comps = cm_df[(cm_df.strand == '-') & cm_df.Group == 1].index
+to_drop = s2[s2['E-value'] <= e_lim].index
+rev_comps = s2[(s2.strand == '-') and (s2['E-value'] > e_lim)].index
 print("{} outliers detected, which make up {:.2%} of OTUs".format(to_drop.shape[0], to_drop.shape[0]/cm_df.shape[0]))
 print("{} are reverse complimented".format(rev_comps.shape[0]))
 
 for i_list, ls_name in zip([to_drop, rev_comps], ['poor_aligners.txt', 'reverse_strand_aligners.txt']):
     to_write = "\n".join(list(i_list))
-    with open(os.path.join(data_path, ls_name), 'w') as pa_fh:
-	   pa_fh.write(to_write)
+    with open(os.path.join(out_dir, ls_name), 'w') as pa_fh:
+       pa_fh.write(to_write)

@@ -32,6 +32,7 @@ seqmagick mogrify --ungap $TREE_DIR/query.hug_tol.clean.fasta
 cmsearch --cpu 7 --tblout $TREE_DIR/cm_report.txt --noali -o $TREE_DIR/cm_stdout.txt $TREE_DIR/16S_bacteria.cm $TREE_DIR/query.hug_tol.clean.fasta
 
 COV_MOD_DIR=$TREE_DIR/cov_model_data
+mkdir -p $COV_MOD_DIR
 
 python read_cmsearch_report.py $COV_MOD_DIR cm_report.txt $TREE_DIR
 
