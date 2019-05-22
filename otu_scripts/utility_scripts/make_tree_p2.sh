@@ -30,3 +30,15 @@ seqmagick mogrify --ungap $TREE_DIR/query.hug_tol.clean.fasta
 # may produce error message, but will still succeed
 
 cmsearch --cpu 7 --tblout $TREE_DIR/cm_report.txt --noali -o $TREE_DIR/cm_stdout.txt $TREE_DIR/16S_bacteria.cm $TREE_DIR/query.hug_tol.clean.fasta
+
+COV_MOD_DIR=$TREE_DIR/cov_model_data
+
+python read_cmsearch_report.py $COV_MOD_DIR cm_report.txt $TREE_DIR
+
+mv $TREE_DIR/cm_report.txt $COV_MOD_DIR
+mv $TREE_DIR/cm_stdout.txt $COV_MOD_DIR
+
+
+
+
+
