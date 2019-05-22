@@ -21,7 +21,7 @@ TABLE_DIR=$BASE_DIR/otu_data/dada2_outputs
 source activate otu_caller
 
 # Write query file into tree folder
-$SCRIPTS_/pca_samples.py $TREE_DIR_ create_fasta $TABLE_DIR abundance_table.tsv taxa_table.tsv
+python $SCRIPTS_/pca_samples.py $TREE_DIR_ create_fasta $TABLE_DIR abundance_table.tsv taxa_table.tsv
 
 # check query to see everything is a 16S gene
 tr "[ -%,;\(\):=\.\\\[]\"\']" "_" < $TREE_DIR/query.fasta > $TREE_DIR/query.clean.fasta
@@ -34,12 +34,12 @@ cmsearch --cpu 7 --tblout $TREE_DIR/cm_report.txt --noali -o $TREE_DIR/cm_stdout
 COV_MOD_DIR=$TREE_DIR/cov_model_data
 mkdir -p $COV_MOD_DIR
 
-python read_cmsearch_report.py $COV_MOD_DIR cm_report.txt $TREE_DIR
+python $SCRIPTS_/read_cmsearch_report.py $COV_MOD_DIR cm_report.txt $TREE_DIR
 
 mv $TREE_DIR/cm_report.txt $COV_MOD_DIR
 mv $TREE_DIR/cm_stdout.txt $COV_MOD_DIR
 
-
+python $SCRIPTS_/pca_samples.py $TREE_DIR_ cm_data $TABLE_DIR abundance_table.tsv taxa_table.tsv
 
 
 

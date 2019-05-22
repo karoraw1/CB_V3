@@ -1,3 +1,5 @@
+from Bio.Seq import Seq
+from Bio.Alphabet import generic_dna
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 from deicode.optspace import OptSpace
@@ -23,7 +25,7 @@ out_path = sys.argv[-5]
 #taxa_file = "taxa_table.tsv"
 #abund_file = "abundance_table.tsv"
 #data_path = "../../otu_data/dada2_outputs"
-#task_name = "create_fasta"
+#task_name = "cm_data"
 #out_path = "../../otu_data/tree_data"
 
 abund_f = os.path.join(data_path, abund_file)
@@ -46,31 +48,30 @@ abund_df3 = abund_df2[abund_df2.sum(1)!=0]
 
 # export them for alignment to RFAM covariance model, then stop
 
-if this_step == 'create_fasta':
+if task_name == 'create_fasta':
     heads = sorted(list(abund_df3.columns))
     tails = [OTU_name2seq[i] for i in heads]
     with open(os.path.join(out_path, 'query.fasta'), "w") as wofh:
         wofh.write("".join([">{}\n{}\n".format(i, j) for i, j in zip(heads, tails)]))
-elif this_step == 2:
+elif task_name == 'cm_data':
     # read back in data
-    with open("../data/TREEs/cmsearch_figs/poor_aligners.txt") as paFH:
+    with open(os.path.join(out_path, 'cov_model_data', 'poor_aligners.txt')) as paFH:
         poor_aligners = [i for i in paFH.read().split("\n") if i != ""]
-    with open("../data/TREEs/cmsearch_figs/reverse_strand_aligners.txt") as rsFH:
+    with open(os.path.join(out_path, 'cov_model_data', 'reverse_strand_aligners.txt')) as rsFH:
         rev_strand_algn = [i for i in rsFH.read().split("\n") if i != ""]
 
     # filter out poorly aligned seqs
     taxa_df = taxa_df[~taxa_df.index.isin(poor_aligners)]
     abund_df3 = abund_df3.loc[:, ~abund_df3.columns.isin(poor_aligners)]
     # reverse-complement flipped seqs
-    from Bio.Seq import Seq
-    from Bio.Alphabet import generic_dna
     for r_otu in rev_strand_algn:
         rev_comp = str(Seq(OTU_name2seq[r_otu], generic_dna).reverse_complement())
         OTU_name2seq[r_otu] = rev_comp
+    
     # write out good OTU sequences
     heads = sorted(list(abund_df3.columns))
     tails = [OTU_name2seq[i] for i in heads]
-    with open('../data/TREEs/query_cmsearched.fasta', "w") as wofh:
+    with open(os.path.join(out_path, 'query_cmsearched.fasta'), "w") as wofh:
         wofh.write("".join([">{}\n{}\n".format(i, j) for i, j in zip(heads, tails)]))
 elif this_step == 3:
     with open("../data/TREEs/cmsearch_figs/poor_aligners.txt") as paFH:
