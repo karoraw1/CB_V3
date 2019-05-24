@@ -57,12 +57,17 @@ elif task_name == 'cm_data':
     # read back in data
     with open(os.path.join(out_path, 'cov_model_data', 'poor_aligners.txt')) as paFH:
         poor_aligners = [i for i in paFH.read().split("\n") if i != ""]
+    
     with open(os.path.join(out_path, 'cov_model_data', 'reverse_strand_aligners.txt')) as rsFH:
         rev_strand_algn = [i for i in rsFH.read().split("\n") if i != ""]
-
+    
     # filter out poorly aligned seqs
-    taxa_df = taxa_df[~taxa_df.index.isin(poor_aligners)]
-    abund_df3 = abund_df3.loc[:, ~abund_df3.columns.isin(poor_aligners)]
+    pa_taxa = taxa_df.loc[poor_aligners, :]
+    pa_non_arch_euk = pa_taxa[~pa_taxa.Kingdom.isin(['Archaea', 'Eukaryota'])]
+    length_filter = [i for i in OTU_name2seq.keys() if len(OTU_name2seq[i]) < 240 or len(OTU_name2seq[i]) > 260]
+    to_remove = set(length_filter + list(pa_non_arch_euk.index))
+    taxa_df = taxa_df[~taxa_df.index.isin(to_remove)]
+    abund_df3 = abund_df3.loc[:, ~abund_df3.columns.isin(to_remove)]
     # reverse-complement flipped seqs
     for r_otu in rev_strand_algn:
         rev_comp = str(Seq(OTU_name2seq[r_otu], generic_dna).reverse_complement())

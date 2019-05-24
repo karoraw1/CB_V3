@@ -20,6 +20,8 @@
 14. infernal 1.1.2
 15. taxtastic 0.8.11
 16. raxml 8.2.12
+17. pplacer 1.1.alpha19
+
 
 
 
@@ -39,6 +41,10 @@
 11. Edit `mergeRunandTaxa.sh` to point to your input files and DBs and run.
 12. Confirm that TSVs with abundances and taxa are in `dada2_outputs`
 13. Run the steps in `make_tree_1.sh` to create a reference tree for `pplacer`
-14. Run `make_tree_2.sh` to check which OTUs are high quality
+14. Run `make_tree_2.sh` to remove low quality sequences
+15. 
 
 Current step: fixing the PCA producer and sequence producer to feed into the treemaker
+
+
+
